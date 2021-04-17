@@ -1,5 +1,6 @@
 from discord.ext import commands
 import json
+import os
 
 huiswerk = {}
 
@@ -12,7 +13,7 @@ def save():
 
 @commands.command(name="HwReset", help="Reset homework file")
 async def HwReset(ctx):
-    if ctx.message.author.id == 431360318942216192:
+    if ctx.message.author.id == os.getenv("OwnerID"):
         huiswerk.clear()
         save()
         return await ctx.send("Homework has been reset")
