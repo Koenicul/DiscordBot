@@ -34,4 +34,5 @@ async def on_command_error(ctx, error):
 
 bot.load_extension("Commands.abcFormule")
 bot.load_extension("Commands.Homework")
+bot.load_extension("Commands.mathFormulas")
 bot.run(os.getenv("Token"))
