@@ -32,6 +32,7 @@ async def HwAdd(ctx, Subject="", Exercise=""):
 @commands.command(name="HwShow", help="Show homework")
 async def HwShow(ctx, Subject=""):
     if Subject.lower() in huiswerk:
+        await ctx.send("Showing homework from {}".format(Subject))
         await ctx.send(huiswerk[Subject.lower()])
     else:
         await ctx.send("This subject doesn't exist")
