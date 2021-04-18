@@ -10,7 +10,7 @@ async def abc(ctx, a="", b="", c=""):
     A = float(a)
     B = float(b)
     C = float(c)
-  except:
+  except ValueError:
     return await ctx.send("Invalid!")
   
   if A == 0:

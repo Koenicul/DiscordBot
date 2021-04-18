@@ -33,7 +33,8 @@ async def HwAdd(ctx, Subject="", Exercise=""):
 async def HwShow(ctx, Subject=""):
     if Subject.lower() in huiswerk:
         await ctx.send("Showing homework from {}".format(Subject))
-        await ctx.send(huiswerk[Subject.lower()])
+        for x in huiswerk[Subject.lower()]:
+            await ctx.send(x)
     else:
         await ctx.send("This subject doesn't exist")
 
