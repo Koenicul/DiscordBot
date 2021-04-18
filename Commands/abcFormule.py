@@ -14,18 +14,18 @@ async def abc(ctx, a="", b="", c=""):
     return await ctx.send("Invalid!")
   
   if A == 0:
-      print("That is not a quadratic equation")
-      input()
+      await ctx.send("That is not a quadratic equation")
   else:
-    try:
-      X = (-B + math.sqrt(B**2 - 4*A*C))/(2*A)
-      X2 = (-B - math.sqrt(B**2 - 4*A*C))/(2*A)
-    except:
-      return await ctx.send("Invalid!")
-    if X != X2:
-      await ctx.send("{} or {}".format(floatToString(X), floatToString(X2)))
-    else:
-      await ctx.send("{}".format(floatToString(X)))
+    D = B**2 - 4*A*C
+    if D < 0:
+        await ctx.send("Graph doesn't intersect")
+    elif D == 0:
+        X = (-B + math.sqrt(D))/(2*A)
+        await ctx.send("Graph intersects at x = {}".format(floatToString(X)))
+    elif D > 0:
+        X = (-B + math.sqrt(D))/(2*A)
+        X2 = (-B - math.sqrt(D))/(2*A)
+        await ctx.send("Graph intersects at x = {} and x = {}".format(floatToString(X), floatToString(X2)))
 
 def setup(bot):
   bot.add_command(abc)
