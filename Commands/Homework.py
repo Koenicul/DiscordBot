@@ -13,7 +13,7 @@ def save():
 
 @commands.command(name="HwReset", help="Reset homework file")
 async def HwReset(ctx):
-    if ctx.message.author.id == os.getenv("OwnerID"):
+    if ctx.message.author.name == os.getenv("OwnerID"):
         huiswerk.clear()
         save()
         return await ctx.send("Homework has been reset")
