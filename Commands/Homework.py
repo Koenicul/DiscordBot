@@ -43,6 +43,8 @@ async def HwRemove(ctx, Subject="", Exercise=""):
         return await ctx.send("This subject doesn't exist")
     try:
         huiswerk[Subject.lower()].remove(Exercise)
+        if len((huiswerk[Subject.lower()])) <= 0:
+            huiswerk.pop(Subject.lower())
         save()
         return await ctx.send('"{}" has been removed from {}'.format(Exercise, Subject))
     except ValueError:
