@@ -17,17 +17,22 @@ async def HwReset(ctx):
         huiswerk.clear()
         save()
         return await ctx.send("Homework has been reset")
+    else:
+        return await ctx.send("You don't have permission")
 
 @commands.command(name="HwAdd", help="Add homework")
 async def HwAdd(ctx, Subject="", Exercise=""):
-    if not Subject.lower() in huiswerk:
-        huiswerk[Subject.lower()] = []
-    if Exercise in huiswerk[Subject.lower()]:
-        return await ctx.send("Subject already exist")
+    if Exercise != "":
+        if not Subject.lower() in huiswerk:
+            huiswerk[Subject.lower()] = []
+        if Exercise in huiswerk[Subject.lower()]:
+            return await ctx.send("Subject already exist")
 
-    huiswerk[Subject.lower()].append(Exercise)
-    await ctx.send('"{}" was added to {}'.format(Exercise, Subject))
-    save()
+        huiswerk[Subject.lower()].append(Exercise)
+        await ctx.send('"{}" was added to {}'.format(Exercise, Subject))
+        save()
+    else:
+        return await ctx.send("Invalid!") 
 
 @commands.command(name="HwShow", help="Show homework")
 async def HwShow(ctx, Subject=""):
@@ -51,8 +56,15 @@ async def HwRemove(ctx, Subject="", Exercise=""):
     except ValueError:
         return await ctx.send("This exercise doesn't exist")
 
+@commands.command(name="HwShowAll", help="Shows all subjects with homework")
+async def HwShowAll(ctx):
+    if len(huiswerk) != 0:
+        for x in huiswerk:
+            await ctx.send(x)
+
 def setup(bot):
-  bot.add_command(HwAdd)
-  bot.add_command(HwShow)
-  bot.add_command(HwRemove)
-  bot.add_command(HwReset)
+    bot.add_command(HwAdd)
+    bot.add_command(HwShow)
+    bot.add_command(HwRemove)
+    bot.add_command(HwReset)
+    bot.add_command(HwShowAll)
