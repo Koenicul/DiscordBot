@@ -12,15 +12,27 @@ async def MathRules(ctx, Type="", Type2="", Measure1="", Measure2="", Measure3="
 
   if Type.lower() == "sin":
     if Type2.lower() == "corner":
-      answer = round(math.degrees(math.asin((mes1*(math.sin(math.radians(mes2))))/mes3)), 2)
+      try:
+        answer = round(math.degrees(math.asin((mes1*(math.sin(math.radians(mes2))))/mes3)), 2)
+      except ValueError:
+        return await ctx.send("Invalid!")
     if Type2.lower() == "side":
-      answer = round((mes2*math.sin(math.radians(mes1)))/(math.sin(math.radians(mes3))), 2)
+      try:
+        answer = round((mes2*math.sin(math.radians(mes1)))/(math.sin(math.radians(mes3))), 2)
+      except ValueError:
+        return await ctx.send("Invalid!")
     
   elif Type.lower() == "cos":
     if Type2.lower() == "corner":
-      answer = round(math.degrees(math.acos((mes2**2 + mes3**2 - mes1**2)/(2*mes2*mes3))), 2)
+      try:
+        answer = round(math.degrees(math.acos((mes2**2 + mes3**2 - mes1**2)/(2*mes2*mes3))), 2)
+      except ValueError:
+        return await ctx.send("Invalid!")
     elif Type2.lower() == "side":
-      answer = round(math.sqrt(mes2**2 + mes3**2 - 2*mes2*mes3*math.cos(math.radians(mes1))), 2)
+      try:
+        answer = round(math.sqrt(mes2**2 + mes3**2 - 2*mes2*mes3*math.cos(math.radians(mes1))), 2)
+      except ValueError:
+        return await ctx.send("Invalid!")
 
   await ctx.send(answer)
 
