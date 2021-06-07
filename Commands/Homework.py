@@ -61,6 +61,8 @@ async def HwShowAll(ctx):
     if len(huiswerk) != 0:
         for x in huiswerk:
             await ctx.send(x)
+    else:
+        return await ctx.send("There is no homework")
 
 def setup(bot):
     bot.add_command(HwAdd)
