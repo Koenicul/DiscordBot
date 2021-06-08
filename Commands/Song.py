@@ -13,15 +13,12 @@ isPaused = False
 @tasks.loop(seconds = 1)
 async def myLoop(ctx):
     if not servers[0].is_playing() and len(queue) > 0  and not isPaused:
-        servers[0].play(FFmpegPCMAudio(queue[0], **ffmpeg_opts))
-        currentSong.append(queue[0])
+        await Songs(ctx, queue[0])
         queue.remove(queue[0])
-        await ctx.send("Now playing: " + currentSong[0])
 
 @tasks.loop(seconds = 1)
 async def popSong():
     if not servers[0].is_playing() and not isPaused:
-        urls.remove(urls[0])
         currentSong.clear()
 
 @commands.command(pass_context=True,name="Play", help="Plays audio.")
@@ -34,24 +31,28 @@ async def Play(ctx, url):
         myLoop.start(ctx)
     video = new(url)
     audio = video.getbestaudio().url
-    urls.append(audio)
+    urls.append(url)
     if not servers[0].is_playing() and not len(currentSong) > 0:
-        currentSong.append(url)
         await Songs(ctx, audio)
     else:
         queue.append(audio)
         await ctx.send("Added to queue.")
 
 async def Songs(ctx, audio):
+    currentSong.append(urls[0])
     servers[0].play(FFmpegPCMAudio(audio, **ffmpeg_opts))
     servers[0].is_playing() 
     await ctx.send("Now playing: " + currentSong[0])
+    urls.remove(urls[0])
 
 @commands.command(name="Die", help="Disconnects the bot.")
 async def Die(ctx):
     try:
         server = ctx.message.guild.voice_client
         await server.disconnect()
+        await Reset()
+        global isPaused
+        isPaused = False
         await ctx.send("k")
     except:
         await ctx.send("Currently not in a VC")
@@ -84,6 +85,15 @@ async def Resume(ctx):
             ctx.send("Music is already playing.")
     else:
         await ctx.send("Bot is not connected.")
+
+
+async def Reset():
+    popSong.stop()
+    myLoop.stop()
+    servers.clear()
+    currentSong.clear()
+    queue.clear()
+    urls.clear()
 
 def setup(bot):
     bot.add_command(Play)
