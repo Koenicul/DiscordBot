@@ -4,8 +4,12 @@ import os
 
 huiswerk = {}
 
-with open('huiswerk.json', 'r') as file:
-    huiswerk = json.load(file)
+try:
+    with open('huiswerk.json', 'r') as file:
+        huiswerk = json.load(file)
+except:
+    with open("huiswerk.json", "w") as jsonFile:
+        json.dump(huiswerk, jsonFile)
 
 def save():
     with open('huiswerk.json', 'w') as file:
