@@ -16,20 +16,12 @@ bot = commands.Bot(command_prefix=os.getenv("Prefix"), case_insensitive=True, he
 
 @bot.event
 async def on_ready():
-  print("logged in as {}".format(bot.user.name))
-
-async def get_quote():
-  response = requests.get("https://zenquotes.io/api/random").json()[0]
-  return "{}-{}".format(response['q'], response['a'])
-
-@bot.command(name="Quote", help="Inspire moment")
-async def quote(ctx):
-  await ctx.send(await get_quote())
+    print("logged in as {}".format(bot.user.name))
 
 @bot.event
-async def on_command_error(ctx, error):
+async def on_command_error(error):
     if isinstance(error, CommandNotFound):
-        return
+      return
     raise error
 
 bot.load_extension("Commands.abcFormule")
