@@ -5,7 +5,7 @@ def floatToString(flt):
   return ('%.15f' % flt).rstrip('0').rstrip('.')
 
 @commands.command(name="ABC", help="Calculates abc-Formula")
-async def abc(ctx, a="", b="", c=""): 
+async def ABC(ctx, a="", b="", c=""): 
   try:
     A = float(a)
     B = float(b)
@@ -28,4 +28,4 @@ async def abc(ctx, a="", b="", c=""):
         await ctx.send("Graph intersects at x = {} and x = {}".format(floatToString(X), floatToString(X2)))
 
 def setup(bot):
-  bot.add_command(abc)
+  bot.add_command(ABC)
