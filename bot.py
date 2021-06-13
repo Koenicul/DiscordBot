@@ -1,11 +1,7 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
-import requests
-import re
-import json
 from discord.ext import commands
-import math
 from discord.ext.commands import CommandNotFound
 
 help_command = commands.DefaultHelpCommand(
